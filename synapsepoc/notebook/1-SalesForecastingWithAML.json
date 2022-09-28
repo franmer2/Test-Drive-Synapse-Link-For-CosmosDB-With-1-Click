@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "4e6cbefe-8061-42ef-8dcb-7820fe26540a"
+				"spark.autotune.trackingId": "ff07c7d0-7132-4053-ab46-d3dfad8cee9e"
 			}
 		},
 		"metadata": {
@@ -41,9 +41,9 @@
 				},
 				"sparkVersion": "2.4",
 				"nodeCount": 5,
-				"cores": 4,
-				"memory": 28,
-				"automaticScaleJobs": false
+				"cores": 8,
+				"memory": 56,
+				"automaticScaleJobs": true
 			},
 			"sessionKeepAliveTimeout": 30
 		},
@@ -107,7 +107,7 @@
 					"AMLWssubscription_id='b4f62636-9bf0-40c4-892e-eb837e42ff84'\r\n",
 					"AMLWsresource_group='CosmosDB'"
 				],
-				"execution_count": 2
+				"execution_count": 7
 			},
 			{
 				"cell_type": "markdown",
@@ -167,7 +167,7 @@
 					"    .mode('append')\\\r\n",
 					"    .save()"
 				],
-				"execution_count": 16
+				"execution_count": 8
 			},
 			{
 				"cell_type": "markdown",
