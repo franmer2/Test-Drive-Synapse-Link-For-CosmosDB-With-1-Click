@@ -1,0 +1,7 @@
+{
+	"name": "CosmosDb637",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/b4f62636-9bf0-40c4-892e-eb837e42ff84/resourceGroups/CosmosDB/providers/Microsoft.DocumentDB/databaseAccounts/franmeracccosmos",
+		"groupId": "Analytical"
+	}
+}
