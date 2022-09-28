@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "a7a085ca-0c8b-4409-a9bd-a505f777ddc4"
+				"spark.autotune.trackingId": "4e6cbefe-8061-42ef-8dcb-7820fe26540a"
 			}
 		},
 		"metadata": {
@@ -31,12 +31,19 @@
 				"name": "python"
 			},
 			"a365ComputeOptions": {
-				"id": "/subscriptions/4eeedd72-d937-4243-86d1-c3982a84d924/resourceGroups/nashahz0923-1/providers/Microsoft.Synapse/workspaces/mcr2rfcjdavtn5kupocws1/bigDataPools/ws1sparkpool1",
+				"id": "/subscriptions/b4f62636-9bf0-40c4-892e-eb837e42ff84/resourceGroups/CosmosDB/providers/Microsoft.Synapse/workspaces/fr2ngkhigk7ny26gpocws1/bigDataPools/ws1sparkpool1",
 				"name": "ws1sparkpool1",
+				"type": "Spark",
+				"endpoint": "https://fr2ngkhigk7ny26gpocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
 				"auth": {
 					"type": "AAD",
 					"authResource": "https://dev.azuresynapse.net"
-				}
+				},
+				"sparkVersion": "2.4",
+				"nodeCount": 5,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
 			},
 			"sessionKeepAliveTimeout": 30
 		},
@@ -100,7 +107,7 @@
 					"AMLWssubscription_id='b4f62636-9bf0-40c4-892e-eb837e42ff84'\r\n",
 					"AMLWsresource_group='CosmosDB'"
 				],
-				"execution_count": 1
+				"execution_count": 2
 			},
 			{
 				"cell_type": "markdown",
