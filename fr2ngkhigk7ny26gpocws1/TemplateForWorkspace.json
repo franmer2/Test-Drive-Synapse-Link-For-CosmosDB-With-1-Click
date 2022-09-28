@@ -94,6 +94,27 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/Create credential CosmosDB')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"description": "Create Credential to use Azure Synapse Link for Cosmos DB",
+				"content": {
+					"query": "\nCREATE CREDENTIAL [franmeracccosmos] \nWITH IDENTITY = 'SHARED ACCESS SIGNATURE', SECRET = 'qauTghR2JPfjJ6NeoNHBDOgn0ey0o1Walzs2QH9T9a4able8VdKAkiQAQh0emM11axhJwmttFFELGCVIZSlSRQ=='\n\n\n\nSELECT TOP 100 *\nFROM OPENROWSET(​PROVIDER = 'CosmosDB',\n                CONNECTION = 'Account=franmeracccosmos;Database=CosmosDemoDB',\n                OBJECT = 'Products',\n                SERVER_CREDENTIAL = 'franmeracccosmos'\n) AS [Products]\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/1-SalesForecastingWithAML')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
@@ -114,7 +135,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "58336a55-77ca-4963-a704-10971670f5f7"
+						"spark.autotune.trackingId": "ff07c7d0-7132-4053-ab46-d3dfad8cee9e"
 					}
 				},
 				"metadata": {
@@ -138,16 +159,14 @@
 						},
 						"sparkVersion": "2.4",
 						"nodeCount": 5,
-						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"cores": 8,
+						"memory": 56
 					},
 					"sessionKeepAliveTimeout": 30
 				},
 				"cells": [
 					{
 						"cell_type": "markdown",
-						"metadata": {},
 						"source": [
 							"# Leverage Power of Azure Synapse Link for Cosmos DB and Spark SQL\n",
 							"With Synapse Link, you can now directly connect to your Azure Cosmos DB containers from Azure Synapse Analytics and access the analytical store with no separate connectors. This notebook scenario is to \n",
@@ -206,7 +225,7 @@
 							"AMLWsresource_group='CosmosDB'"
 						],
 						"outputs": [],
-						"execution_count": 1
+						"execution_count": 7
 					},
 					{
 						"cell_type": "markdown",
@@ -267,7 +286,7 @@
 							"    .save()"
 						],
 						"outputs": [],
-						"execution_count": 16
+						"execution_count": 8
 					},
 					{
 						"cell_type": "markdown",
@@ -367,7 +386,6 @@
 					},
 					{
 						"cell_type": "markdown",
-						"metadata": {},
 						"source": [
 							"## Predictive Analytics\n",
 							"Leverage power of Azure Machine Learning's AutoML to build a Forecasting Model Predictive analytics can help us to study and discover the factors that determine the number of sales that a retail store will have in the future.This notebook scenario is [Microsoft Surface](https://www.microsoft.com/en-us/surface) sales forecasting, with artificially created data. The business challenge is a distributor that wants to predict how many units are necessary in the local warehouse to supply the stores in the area.\n",
@@ -404,7 +422,6 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"import azureml.core\n",
 							"import pandas as pd\n",
@@ -440,7 +457,6 @@
 					},
 					{
 						"cell_type": "markdown",
-						"metadata": {},
 						"source": [
 							"### Data Preparation - Feature engineering, Splitting train & test datasets\n",
 							""
@@ -448,7 +464,6 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"# Initial variables\n",
 							"time_column_name = 'weekStarting'\n",
@@ -511,7 +526,6 @@
 					},
 					{
 						"cell_type": "markdown",
-						"metadata": {},
 						"source": [
 							"### Training the Models using AutoML Forecasting\n",
 							"\n",
@@ -520,7 +534,6 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"# Parameters\n",
 							"time_series_settings = {\n",
@@ -553,14 +566,12 @@
 					},
 					{
 						"cell_type": "markdown",
-						"metadata": {},
 						"source": [
 							"### Retrieving the Best Model and Forecasting"
 						]
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"# Retrieving the best model\n",
 							"best_run, fitted_model = remote_run.get_output()\n",
@@ -579,14 +590,12 @@
 					},
 					{
 						"cell_type": "markdown",
-						"metadata": {},
 						"source": [
 							"### Plotting the Results"
 						]
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"import pandas as pd\n",
 							"import numpy as np\n",
@@ -668,7 +677,6 @@
 					},
 					{
 						"cell_type": "markdown",
-						"metadata": {},
 						"source": [
 							"## Closing\n",
 							"\n",
@@ -1376,11 +1384,11 @@
 				},
 				"autoScale": {
 					"enabled": true,
-					"maxNodeCount": 40,
-					"minNodeCount": 3
+					"maxNodeCount": 50,
+					"minNodeCount": 6
 				},
 				"nodeCount": 5,
-				"nodeSize": "Small",
+				"nodeSize": "Medium",
 				"nodeSizeFamily": "MemoryOptimized",
 				"sparkVersion": "2.4",
 				"isComputeIsolationEnabled": false,
